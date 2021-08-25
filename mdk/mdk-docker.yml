@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  mdk-shell:
+    image: docker.io/zeedhoon/mdk-workspace:2.1.0
+    volumes:
+      - source: .
+        target: /workspace/mdk
+        type: bind
+      - source: ../${SERVICE}
+        target: /workspace/${SERVICE}
+        type: bind
+
+      - source: /var/run/docker.sock
+        target: /var/run/docker-host.sock
+        type: bind
+
+      - source: ~/.config/gcloud
+        target: /root/.config/gcloud
+        type: bind
+      - source: ~/.kube
+        target: /root/.kube
+        type: bind
+      - source: ~/.mdk-docker
+        target: /root/.docker
+        type: bind
+      - source: ~/.m2
+        target: /root/.m2
+        type: bind
+      - source: ~/.aws
+        target: /root/.aws
+        type: bind
+
+    working_dir: /workspace
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: bash
+
+    # Uncomment the next line to use a non-root user for all processes.
+    # user: node
+
