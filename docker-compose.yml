@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  api-server:
+    build: 
+      context: ./api-server
+      dockerfile: .devcontainer/Dockerfile
+      target: develop_image
+
+    privileged: true      
+
+    ports:
+      - 8080:8080
+      
+    volumes:
+      - type: bind
+        source: ./api-server
+        target: /workspace/api-server
+
+    command: /bin/bash
+
+  api-server-release:
+    build: 
+      context: ./api-server
+      dockerfile: .devcontainer/Dockerfile
+      target: release_image
+
+    privileged: true      
+
+    ports:
+      - 8080:8080
+
+    command: ./container-entrypoint.sh
+
+

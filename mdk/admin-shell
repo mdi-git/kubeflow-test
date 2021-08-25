@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$1" == "" ]; then
+   mkdir -p '.git'
+   export SERVICE='.git'
+else   
+   export SERVICE=`basename "$1"`
+fi
+
+mkdir -p ~/.mdk-docker
+docker-compose -f mdk/mdk-docker.yml run --service-ports --rm mdk-shell bash
+
